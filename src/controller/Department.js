@@ -6,7 +6,7 @@ const departmentController = {};
 // Create department API
 departmentController.create = async (req, res) => {
   try {
-    const { departmentName } = req.body;
+    const {departmentName} = req.body;
     if (!departmentName) {
       return res.status(404).send({ success: false, msg: "Department Name not found" });
     }
