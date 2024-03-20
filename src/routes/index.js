@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const authMiddleware=require('../middlewares/authMiddleware');
+const authenticateUser=require('../middlewares/authMiddleware');
+
 // Import controllers
 const employeeController = require("../controller/Employee");
 const departmentController = require("../controller/Department");
@@ -50,7 +52,7 @@ router.post("/login",userController.login);
  *       '400':
  *         description: Bad request
  */
-router.post("/employees",authMiddleware('admin'), employeeController.create); // Create a new employee
+router.post("/employees",authenticateUser,authMiddleware('admin'), employeeController.create); // Create a new employee
 
 /**
  * @swagger
