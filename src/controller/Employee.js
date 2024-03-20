@@ -48,7 +48,6 @@ employeeController.create = async (req, res) => {
 // Get all employees API
 employeeController.getAll = async (req, res) => {
   try {
-    console.log("api is called---");
 
     const employees = await EmployeeDetails.findAll();
     console.log("employees---",employees);
@@ -63,6 +62,11 @@ employeeController.getAll = async (req, res) => {
 employeeController.getById = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!id) {
+      return res
+        .status(400)
+        .send({ success: false, msg: "employee Id is required" });
+    }
     const employee = await EmployeeDetails.findOne({ where: { id } });
     if (!employee) {
       return res
@@ -78,8 +82,13 @@ employeeController.getById = async (req, res) => {
 
 // Update employee API
 employeeController.update = async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
+    if (!id) {
+      return res
+        .status(400)
+        .send({ success: false, msg: "employee Id is required" });
+    }
     const [updated] = await EmployeeDetails.update(req.body, {
       where: { id },
     });
@@ -96,8 +105,13 @@ employeeController.update = async (req, res) => {
 
 // Delete employee API
 employeeController.delete = async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
+    if (!id) {
+      return res
+        .status(400)
+        .send({ success: false, msg: "employee Id is required" });
+    }
     const deleted = await EmployeeDetails.destroy({ where: { id } });
     if (deleted) {
       return res.status(204).send();

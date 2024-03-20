@@ -32,4 +32,14 @@ db.User=require("./user")(
   sequelize,
   Sequelize
 );
+
+//mapping department to employees
+db.DepartmentDetails.hasMany(db.EmployeeDetails, {
+  foreignKey: "department-id",
+  as: "employees",
+});
+db.EmployeeDetails.belongsTo(db.DepartmentDetails, {
+  foreignKey: "department-id",
+});
+
 module.exports = { db };

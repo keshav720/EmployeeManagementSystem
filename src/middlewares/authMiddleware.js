@@ -11,7 +11,6 @@ const authenticateUser = (req, res, next) => {
       }
       res.locals.user = jwt.verify(authToken, process.env.JWT_SECRET_KEY);
       next();
-
   } catch (error) {
       if (error instanceof JWTEXPIREDERROR) {
           return res.status(401).json({ error: "Unauthorized. Token Expired." });

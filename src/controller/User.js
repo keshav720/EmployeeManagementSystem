@@ -17,7 +17,6 @@ userController.signUp = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      role,
     });
     res
       .status(201)
