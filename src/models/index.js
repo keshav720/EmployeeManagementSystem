@@ -28,5 +28,8 @@ db.EmployeeDetails=require("./employee")(
     sequelize,
     Sequelize
 );
-
+db.User=require("./user")(
+  sequelize,
+  Sequelize
+);
 module.exports = { db };

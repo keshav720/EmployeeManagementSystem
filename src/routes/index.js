@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
-
+const authMiddleware=require('../middlewares/authMiddleware');
 // Import controllers
 const employeeController = require("../controller/Employee");
 const departmentController = require("../controller/Department");
+const userController=require("../controller/User");
 
+router.post("/signup",userController.signUp);
+router.post("/login",userController.login);
 /**
  * @swagger
  * tags:
@@ -47,7 +50,7 @@ const departmentController = require("../controller/Department");
  *       '400':
  *         description: Bad request
  */
-router.post("/employees", employeeController.create); // Create a new employee
+router.post("/employees",authMiddleware('admin'), employeeController.create); // Create a new employee
 
 /**
  * @swagger
