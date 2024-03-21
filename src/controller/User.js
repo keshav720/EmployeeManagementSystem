@@ -6,7 +6,7 @@ const userController = {};
 // Signup route
 userController.signUp = async (req, res) => {
   try {
-    const { username, email, password,role } = req.body;
+    const { username, email, password } = req.body;
     // Check if email already exists
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
