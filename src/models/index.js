@@ -32,14 +32,33 @@ db.User=require("./user")(
   sequelize,
   Sequelize
 );
-
+db.Compnay=require("./company")(
+  sequelize,
+  Sequelize
+);
+//mapping company to user
+db.Compnay.hasOne(db.User, {
+  foreignKey: "companyId",
+  as: "user",
+});
+db.User.belongsTo(db.Compnay, {
+  foreignKey: "companyId",
+});
+//mapping user to departments
+db.User.hasMany(db.DepartmentDetails, {
+  foreignKey: "userId",
+  as: "user",
+});
+db.DepartmentDetails.belongsTo(db.User, {
+  foreignKey: "userId",
+});
 //mapping department to employees
 db.DepartmentDetails.hasMany(db.EmployeeDetails, {
-  foreignKey: "department-id",
+  foreignKey: "departmentId",
   as: "employees",
 });
 db.EmployeeDetails.belongsTo(db.DepartmentDetails, {
-  foreignKey: "department-id",
+  foreignKey: "departmentId",
 });
 
 module.exports = { db };
