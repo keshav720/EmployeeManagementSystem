@@ -11,6 +11,8 @@ const companyController=require("../controller/Company");
 
 router.post("/signup", userController.signUp);
 router.post("/login", userController.login);
+router.post("/admin", userController.updateUserRole);
+
 router.post("/company",companyController.create);
 /**
  * @swagger

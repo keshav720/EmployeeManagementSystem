@@ -46,5 +46,21 @@ userController.login = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+userController.updateUserRole = async (req, res) => {
+  try {
+    const {userId} = req.params.userId;
+    // Find the user by ID and update their role
+    const updatedUser = await User.findByIdAndUpdate(userId, { role: 'admin' }, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User role updated to admin', user: updatedUser });
+  } catch (error) {
+    console.error('Error updating user role:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 module.exports = userController;
