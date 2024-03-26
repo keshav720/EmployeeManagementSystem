@@ -39,7 +39,7 @@ userController.login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid password" });
     }
-    const token = jwt.sign({ id: user.id }, "secret_key", { expiresIn: "1h" });
+    const token = jwt.sign({ id: user.id, role: user.role }, "yourSecretKeyHere", { expiresIn: "1h" });
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
     console.error(error);
@@ -47,4 +47,4 @@ userController.login = async (req, res) => {
   }
 };
 
-module.exports = router;
+module.exports = userController;

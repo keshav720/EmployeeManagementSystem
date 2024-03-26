@@ -60,3 +60,5 @@ companyController.getByCompanyId = async (req, res) => {
     return res.status(400).send({ success: false, error: error.message });
   }
 };
+
+module.exports=companyController;

@@ -1,15 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const authMiddleware=require('../middlewares/authMiddleware');
-const authenticateUser=require('../middlewares/authMiddleware');
+const authorizeUser = require("../middlewares/authUser");
+const authenticateUser = require("../middlewares/authMiddleware");
 
 // Import controllers
 const employeeController = require("../controller/Employee");
 const departmentController = require("../controller/Department");
-const userController=require("../controller/User");
+const userController = require("../controller/User");
+const companyController=require("../controller/Company");
 
-router.post("/signup",userController.signUp);
-router.post("/login",userController.login);
+router.post("/signup", userController.signUp);
+router.post("/login", userController.login);
+router.post("/company",companyController.create);
 /**
  * @swagger
  * tags:
@@ -52,7 +54,12 @@ router.post("/login",userController.login);
  *       '400':
  *         description: Bad request
  */
-router.post("/employees",authenticateUser,authMiddleware('admin'), employeeController.create); // Create a new employee
+router.post(
+  "/employees",
+  authenticateUser,
+  authorizeUser(["admin"]),
+  employeeController.create
+);
 
 /**
  * @swagger
@@ -249,7 +256,8 @@ router.delete("/employees/:id", employeeController.delete); // Delete employee b
  */
 
 // Departments Routes
-router.post("/departments", departmentController.create); // Create a new department
+router.post("/departments", authenticateUser,
+authorizeUser(["admin"]), departmentController.create); // Create a new department
 router.get("/departments", departmentController.getAll); // Get all departments
 router.get("/departments/:id", departmentController.getById); // Get department by ID
 router.put("/departments/:id", departmentController.update); // Update department by ID
